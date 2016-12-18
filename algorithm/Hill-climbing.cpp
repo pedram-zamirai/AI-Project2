@@ -27,7 +27,7 @@ void algorithm::run(){
 			break;
 		current = next;
 	}
-	p.print_sol();
+	p.print_sol(current);
 }
 
 int main(){

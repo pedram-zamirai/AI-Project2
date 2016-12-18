@@ -16,8 +16,9 @@ public:
 	int eval(node);
 	node neighbour(node, int);
 	bool is_neighbour(int);
-	void print_sol();
+	void print_sol(node);
 	void print_state(node);
+	int find_node(node);
 };
 
 void node::set_map(int state[]){
@@ -29,7 +30,7 @@ node problem::set_initialstate(){
 	node n;
 	int state[8];
 	state[0]=0;
-	state[1]=0;
+	state[1]=5;
 	state[2]=0;
 	state[3]=0;
 	state[4]=0;
@@ -66,10 +67,10 @@ node problem::neighbour(node n, int i){
 		state[j] = n.map[j];
 	state[n.tag] = (n.map[n.tag] + i) % 8;
 	neighbour.set_map(state);
-	neighbour.parent = &n;
 	neighbour.score = eval(neighbour);
 	neighbour.tag = n.tag + 1;
 	nodes.push_back(neighbour);
+	neighbour.parent = &nodes[find_node(n)];
 	return neighbour;
 }
 
@@ -79,7 +80,14 @@ bool problem::is_neighbour(int i){
 	return true;
 }
 
-void problem::print_sol(){
+void problem::print_sol(node end){
+	while(end.parent != NULL){
+		print_state(end);
+		cout<<endl;
+		end = *(end.parent);
+	}
+	print_state(end);
+
 }
 
 void problem::print_state(node n){
@@ -91,5 +99,20 @@ void problem::print_state(node n){
 				cout<<"- ";
 		}
 		cout<<endl;
+	}
+}
+
+int problem::find_node(node n){
+	int count=0;
+	for(int i=0;i<nodes.size();i++){
+		for(int j=0;j<8;j++){
+			if(n.map[j]==nodes[i].map[j])
+				count++;
+			else 
+				break;
+		}
+		if(count == 8)
+			return i;
+		count = 0;
 	}
 }
