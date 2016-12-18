@@ -30,7 +30,7 @@ node problem::set_initialstate(){
 	node n;
 	int state[8];
 	state[0]=0;
-	state[1]=5;
+	state[1]=0;
 	state[2]=0;
 	state[3]=0;
 	state[4]=0;
@@ -81,12 +81,21 @@ bool problem::is_neighbour(int i){
 }
 
 void problem::print_sol(node end){
-	while(end.parent != NULL){
+	int cnt=1;
+	cout<<"Solution score:"<<end.score<<endl;
+	while(end.tag!=1){
+		cout<<end.tag<<":\n";
 		print_state(end);
 		cout<<endl;
 		end = *(end.parent);
+		cnt++;
 	}
+	cout<<end.tag<<":\n";
 	print_state(end);
+	cout<<endl<<"0:\n";
+	print_state(nodes[0]);
+	cout<<endl<<"Total created nodes:"<<nodes.size();
+	cout<<endl<<"Total expanded nodes:"<<cnt<<endl;
 
 }
 
