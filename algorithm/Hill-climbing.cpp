@@ -13,13 +13,13 @@ public:
 void algorithm::run(){
 	current = p.set_initialstate();
 	int curr_score;
-	while(1){
+	while(true){
 		curr_score = current.score;
-		for(int i=0; p.is_neighbour(i); i++){
+		for(int i=1; p.is_neighbour(i); i++){
 			neighbour = p.neighbour(current, i);
 			if(curr_score < neighbour.score){
-					next = neighbour;
-					curr_score = neighbour.score;
+				next = neighbour;
+				curr_score = neighbour.score;
 
 			}
 		}
@@ -28,7 +28,6 @@ void algorithm::run(){
 		current = next;
 	}
 	p.print_sol();
-	
 }
 
 int main(){
